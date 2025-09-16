@@ -30,7 +30,7 @@ export default function Month({ month, year, colorClass = 'bg-blue-100' }: Month
     return (
         <div
             className="font-ultra inline-block select-none rounded-md border border-neutral-200 bg-white
-             text-neutral-900 shadow-sm w-64"
+             text-neutral-900 shadow-sm w-56"
             aria-label={`${MONTH_NAMES[month]} ${year}`}
         >
             {/* Header */}
@@ -49,12 +49,11 @@ export default function Month({ month, year, colorClass = 'bg-blue-100' }: Month
             </div >
 
             {/* Dates grid */}
-            < div className="grid grid-cols-7 text-center text-sm px-2 pb-2" >
+            < div className="grid grid-cols-7 text-center text-sm px-1 pb-1" >
                 {
                     weeks.map((week, wi) =>
                         week.map((day, di) => {
-                            const base =
-                                "h-8 flex items-center justify-center";
+                            const base = "h-7 flex items-center justify-center";
                             const visible = day == null ? " text-transparent" : " text-neutral-900";
 
                             return (

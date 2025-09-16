@@ -16,11 +16,6 @@ export default function Calendar({ year }: { year: number }) {
 
     return (
         <div className="w-full">
-            {/* Title */}
-            <h2 className="text-2xl font-bold tracking-tight text-neutral-900 mb-4">
-                {year} Calendar
-            </h2>
-
             <div
                 className="grid gap-4 grid-cols-4"
                 role="grid"
