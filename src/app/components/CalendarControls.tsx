@@ -13,7 +13,7 @@ export default function CalendarControls({
     onMultiRoll: (times: number) => void;
 }) {
     return (
-        <div className="flex flex-wrap items-end gap-4 border-6 rounded-xl  border-neutral-200 p-4">
+        <div className="flex flex-wrap items-end gap-4 border-6 rounded-xlborder-neutral-200 p-4 font-lexend-deca">
             <div>
                 <label htmlFor="n" className="block text-sm font-medium">
                     Number of people
@@ -36,7 +36,7 @@ export default function CalendarControls({
             <div className="flex items-center gap-2">
                 <button
                     type="button"
-                    className="rounded-lg border border-neutral-300 px-4 py-2 shadow-sm hover:bg-neutral-50 active:scale-[.99]"
+                    className="font-sans rounded-lg border border-neutral-300 px-4 py-2 shadow-sm hover:bg-neutral-50 active:scale-[.99]"
                     aria-label="Generate a new random set of birthdays"
                     onClick={onRoll}
                 >

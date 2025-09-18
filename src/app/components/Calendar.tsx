@@ -132,14 +132,13 @@ export default function BirthdayParadoxSection() {
                     className="min-w-[24rem] xl:min-w-[26rem] rounded-2xl  p-5 shadow-sm"
                     aria-label="Controls and statistics"
                 >
-                    <h2 className=" font-semibold">Try it yourself</h2>
-                    <h3 className=" font-semibold">Click roll to generate a random set of birthdays. See the </h3>
-
+                    <h2 className="my-6">Try yourself</h2>
+                    <h3 className="">Click roll to generate a random set of birthdays. See the </h3>
                     <div className="mt-4">
                         <CalendarControls n={n} setN={setN} onRoll={roll} onMultiRoll={multiRoll} />
                     </div>
 
-                    <div className="mt-5 space-y-4">
+                    <div className="mt-5 space-y-4 font-lexend-deca">
                         <div>
                             <div className="mt-2 grid grid-cols-2 gap-2">
                                 <div className="border-6 rounded-xl">

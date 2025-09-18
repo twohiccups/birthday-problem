@@ -1,20 +1,14 @@
 // app/components/CollisionGraph.tsx
 "use client";
-import React, {
-    useMemo,
-    useState,
-    forwardRef,
-    useImperativeHandle,
-} from "react";
+import React, { useMemo, useState, forwardRef, useImperativeHandle } from "react";
 import {
-
     ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip,
     ReferenceLine, ReferenceDot, ReferenceArea, Label,
 } from "recharts";
 import clsx from "clsx";
 import { collisionProbability } from "../lib/calendar/util";
 
-const N_MAX = 85;
+const N_MAX = 80;
 const N_AT_50 = 23;
 const N_AT_75 = 32;
 
@@ -23,21 +17,21 @@ const baseData = Array.from({ length: N_MAX }, (_, i) => {
     return { n, p: collisionProbability(n) };
 });
 
+// 🎨 Colors come from CSS vars so they adapt to light/dark automatically.
 const colors = {
-    line: "#60a5fa",
-    grid: "rgba(255,255,255,0.08)",
-    axis: "rgba(255,255,255,0.7)",
-    axisLight: "rgba(255,255,255,0.4)",
-    refBold: "#f59e0b",
-    refSubtle: "rgba(245, 158, 11, 0.45)",
-    fill50: "rgba(245, 158, 11, 0.075)",
-    tooltipBg: "rgba(17,17,17,0.95)",
-    tooltipBorder: "rgba(255,255,255,0.08)",
+    line: "var(--chart-line)",
+    grid: "var(--chart-grid)",
+    axis: "var(--chart-axis)",
+    axisLight: "var(--chart-axisLight)",
+    refBold: "var(--chart-refBold)",
+    refSubtle: "var(--chart-refSubtle)",
+    fill50: "var(--chart-fill50)",
+    tooltipBg: "var(--chart-tooltipBg)",
+    tooltipBorder: "var(--chart-tooltipBorder)",
+    tooltipLabel: "var(--chart-tooltipLabel)",
 };
 
-export type CollisionGraphHandle = {
-    play: () => void;
-};
+export type CollisionGraphHandle = { play: () => void };
 
 export const CollisionProbabilityGraph = forwardRef<CollisionGraphHandle, { className?: string }>(
     function CollisionGraph({ className }, ref) {
@@ -47,7 +41,7 @@ export const CollisionProbabilityGraph = forwardRef<CollisionGraphHandle, { clas
 
         useImperativeHandle(ref, () => ({
             play: () => {
-                setRunId(Date.now());   // force remount of line
+                setRunId(Date.now());
                 setIsAnimating(true);
             },
         }), []);
@@ -55,13 +49,13 @@ export const CollisionProbabilityGraph = forwardRef<CollisionGraphHandle, { clas
         return (
             <div
                 className={clsx(
-                    "tabular-nums font-geist-mono w-full h-full min-h-[280px] rounded-2xl p-3",
+                    "tabular-nums font-geist-mono w-ful min-h-[280px] rounded-2xl p-3",
                     "bg-gradient-to-b from-white/5 to-white/0",
+                    "dark:from-white/5 dark:to-white/0",
                     className
-                )}
-            >
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={data} margin={{ top: 24, right: 28, bottom: 56, left: 64 }}>
+                )}>
+                <ResponsiveContainer width="100%" height={400}>
+                    <LineChart data={data} margin={{ top: 24, right: 12, bottom: 56, left: 12 }}>
                         <CartesianGrid stroke={colors.grid} vertical horizontal />
                         <XAxis
                             dataKey="n"
@@ -91,8 +85,8 @@ export const CollisionProbabilityGraph = forwardRef<CollisionGraphHandle, { clas
                                 value="P(at least one shared birthday)"
                                 angle={-90}
                                 position="insideLeft"
-                                offset={12}
-                                style={{ fill: colors.axis, fontSize: 12, fontWeight: 700 }}
+                                offset={10}
+                                style={{ fill: colors.axis, fontSize: 12, fontWeight: 700, textAnchor: "middle" }}
                             />
                         </YAxis>
                         <Tooltip
@@ -104,10 +98,10 @@ export const CollisionProbabilityGraph = forwardRef<CollisionGraphHandle, { clas
                                 padding: "8px 10px",
                                 minWidth: 120,
                             }}
-                            labelStyle={{ color: colors.axis, fontWeight: 700 }}
+                            labelStyle={{ color: "var(--chart-tooltipLabel)", fontWeight: 700 }}
                             formatter={(val: number) => [`~${(val * 100).toFixed(2)}%`, "P(collision)"]}
                             labelFormatter={(label: number) => `n = ${label}`}
-                            wrapperStyle={{ fontVariantNumeric: "tabular-nums" as any }}
+                            wrapperStyle={{ fontVariantNumeric: "tabular-nums" as never }}
                         />
                         <ReferenceLine y={0.5} stroke={colors.refBold} strokeDasharray="4 4" strokeWidth={2}>
                             <Label value="50%" position="insideTopRight" style={{ fill: colors.refBold, fontWeight: 800 }} />
@@ -121,19 +115,19 @@ export const CollisionProbabilityGraph = forwardRef<CollisionGraphHandle, { clas
                             <Label value="75%" position="insideTopRight" style={{ fill: colors.refSubtle, fontWeight: 700 }} />
                         </ReferenceLine>
                         <ReferenceLine x={N_AT_75} stroke={colors.refSubtle} strokeDasharray="2 6" strokeWidth={1.25}>
-                            <Label value={`n = ${N_AT_75}`} position="top" style={{ fill: colors.refSubtle, fontWeight: 700 }} />
+                            <Label className="hidden sm:inline" value={`n = ${N_AT_75}`} position="top" style={{ fill: colors.refSubtle, fontWeight: 700 }} />
                         </ReferenceLine>
                         <ReferenceDot x={N_AT_75} y={0.75} r={3.5} fill={colors.refSubtle} />
+
                         <defs>
                             <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stopColor={colors.line} stopOpacity={0.9} />
-                                <stop offset="100%" stopColor={colors.line} stopOpacity={1} />
+                                <stop offset="0%" stopColor="var(--chart-line)" stopOpacity={0.9} />
+                                <stop offset="100%" stopColor="var(--chart-line)" stopOpacity={1} />
                             </linearGradient>
                         </defs>
 
-                        {/* Never animate on mount. Only animate when `play()` sets runId + isAnimating */}
                         <Line
-                            key={runId ?? "static"}      // stable key on mount => no implicit animation
+                            key={runId ?? "static"}
                             type="monotone"
                             dataKey="p"
                             name="P(collision)"
@@ -148,7 +142,7 @@ export const CollisionProbabilityGraph = forwardRef<CollisionGraphHandle, { clas
                         />
                     </LineChart>
                 </ResponsiveContainer>
-            </div>
+            </div >
         );
     }
 );

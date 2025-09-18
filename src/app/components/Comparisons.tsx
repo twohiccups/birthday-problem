@@ -53,7 +53,7 @@ export default function Comparisons() {
     const total = useMemo(() => calculateComparisons(n), [n]);
     const edges = useMemo(() => allEdges(n), [n]);
     const [k, setK] = useState(0); // how many edges are revealed
-    const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(false);
     const [eps, setEps] = useState(40); // edges per second
 
     // Compute dynamic canvas size based on container width
@@ -88,34 +88,58 @@ export default function Comparisons() {
 
     return (
         <div className="w-full mx-auto p-4" ref={wrapRef}>
-            <div className="flex flex-col   md:flex-row md:items-end md:justify-between gap-4 mb-4">
-                <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">Building K
-                        <sub className="align-super text-base">{n}</sub>
-                    </h1>
-                    <p className="text-sm text-muted-foreground">
-                        Edges revealed: <span className="font-medium">{k}</span> / {total} ({(progress * 100).toFixed(1)}%)
-                    </p>
-                </div>
-                <div className="flex flex-wrap items-center gap-3">
+            <h2 className="my-6">Comparisons Demo</h2>
+
+            {/* Controls */}
+            <div className="mb-4">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 py-1">
+
+                    {/* Play / Pause */}
                     <button
-                        className="px-3 py-1.5 rounded-2xl shadow-sm border hover:shadow transition"
+                        className="px-3 py-1.5 rounded-2xl shadow-sm border hover:shadow transition min-w-20 shrink-0"
                         onClick={() => setPlaying((p) => !p)}
                         aria-label={playing ? "Pause" : "Play"}
                     >
                         {playing ? "Pause" : "Play"}
                     </button>
+
+                    {/* Reset */}
                     <button
-                        className="px-3 py-1.5 rounded-2xl shadow-sm border hover:shadow transition"
+                        className="px-3 py-1.5 rounded-2xl shadow-sm border hover:shadow transition shrink-0"
                         onClick={() => {
                             setK(0);
-                            setPlaying(true);
+                            setPlaying(false);
                         }}
                     >
                         Reset
                     </button>
-                    <div className="flex items-center gap-2">
-                        <label className="text-sm whitespace-nowrap" htmlFor="eps">Speed</label>
+
+                    {/* People input */}
+                    <div className="flex flex-col items-start font-lexend-deca relative shrink-0">
+                        <label
+                            className="text-sm absolute -top-5 left-0 px-1"
+                            htmlFor="comparisons-n"
+                        >
+                            People
+                        </label>
+                        <input
+                            id="comparisons-n"
+                            type="number"
+                            className="h-9 w-24 rounded-md border border-neutral-300 px-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
+                            min={2}
+                            max={40}
+                            value={n}
+                            onChange={(e) => {
+                                const nv = Math.max(2, Math.min(40, parseInt(e.target.value || "2", 10)));
+                                setN(nv);
+                                setK(0);
+                            }}
+                        />
+                    </div>
+
+                    {/* Speed slider */}
+                    <div className="flex items-center gap-2 grow basis-full sm:basis-auto sm:grow-0">
+                        <label className="text-sm" htmlFor="eps">Speed</label>
                         <input
                             id="eps"
                             type="range"
@@ -124,29 +148,13 @@ export default function Comparisons() {
                             step={1}
                             value={eps}
                             onChange={(e) => setEps(parseInt(e.target.value, 10))}
-                        />
-                        <span className="text-sm tabular-nums w-10 text-right">{eps}</span>
-                        <span className="text-sm">edges/s</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <label className="text-sm whitespace-nowrap" htmlFor="n">n</label>
-                        <input
-                            id="n"
-                            type="number"
-                            className="w-20 px-2 py-1 border rounded-lg"
-                            min={2}
-                            max={40}
-                            value={n}
-                            onChange={(e) => {
-                                const nv = Math.max(2, Math.min(40, parseInt(e.target.value || "2", 10)));
-                                setN(nv);
-                                setK(0);
-                                setPlaying(true);
-                            }}
+                            className="w-full sm:w-56"
                         />
                     </div>
+
                 </div>
             </div>
+
 
             {/* Progress bar */}
             <div className="w-full max-w-xl">
@@ -159,8 +167,23 @@ export default function Comparisons() {
                     />
                 </div>
 
-                <div className=" rounded-3xl border shadow-sm bg-white">
-                    <svg viewBox={`0 0 ${size} ${size}`} width="100%" height="100%" role="img" aria-label={`Complete graph with ${n} nodes`}>
+                {/* Chart Card */}
+                <div className="relative rounded-3xl border shadow-sm bg-white">
+                    {/* Embedded total comparisons badge in the top-left corner */}
+                    <div
+                        className="absolute top-2 left-2 z-10 rounded-full border bg-white/90 backdrop-blur px-3 py-1 text-xs font-medium text-gray-800 shadow-sm"
+                        aria-live="polite"
+                    >
+                        Total: {total}
+                    </div>
+
+                    <svg
+                        viewBox={`0 0 ${size} ${size}`}
+                        width="100%"
+                        height="100%"
+                        role="img"
+                        aria-label={`Complete graph with ${n} nodes and ${total} comparisons`}
+                    >
                         {/* Edges */}
                         <g>
                             {edges.slice(0, k).map(([i, j], idx) => {
@@ -187,7 +210,8 @@ export default function Comparisons() {
                         <g>
                             {pts.map((p, i) => (
                                 <AnimatePresence key={`n-${i}`}>
-                                    <motion.circle suppressHydrationWarning
+                                    <motion.circle
+                                        suppressHydrationWarning
                                         cx={p.x}
                                         cy={p.y}
                                         r={6}
@@ -206,7 +230,15 @@ export default function Comparisons() {
                         {/* Optional labels (small to avoid clutter) */}
                         <g>
                             {pts.map((p, i) => (
-                                <text suppressHydrationWarning key={`t-${i}`} x={p.x} y={p.y - 12} fontSize={10} textAnchor="middle" fill="#374151">
+                                <text
+                                    suppressHydrationWarning
+                                    key={`t-${i}`}
+                                    x={p.x}
+                                    y={p.y - 12}
+                                    fontSize={10}
+                                    textAnchor="middle"
+                                    fill="#374151"
+                                >
                                     {i + 1}
                                 </text>
                             ))}

@@ -2,15 +2,24 @@
 
 html, body {
   height: 100%;
+  width: 100%;
   scrollbar-width: none;
-  overflow: hidden;
-  /* If you really want no scrollbars in WebKit: */
-  &::-webkit-scrollbar { width: 0; height: 0; }
+
 }
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --chart-line: #2563eb; /* blue-600 */
+  --chart-grid: rgba(0, 0, 0, 0.10);
+  --chart-axis: rgba(0, 0, 0, 0.70);
+  --chart-axisLight: rgba(0, 0, 0, 0.30);
+  --chart-refBold: #b45309;             /* amber-700 */
+  --chart-refSubtle: rgba(180, 83, 9, 0.55);
+  --chart-fill50: rgba(245, 158, 11, 0.10);
+  --chart-tooltipBg: rgba(255, 255, 255, 0.98);
+  --chart-tooltipBorder: rgba(0, 0, 0, 0.10);
+  --chart-tooltipLabel: #111827;      
 }
 
 @theme inline {
@@ -26,8 +35,20 @@ html, body {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+      --chart-line: #60a5fa;       
+    --chart-grid: rgba(255, 255, 255, 0.10);
+    --chart-axis: rgba(255, 255, 255, 0.70);
+    --chart-axisLight: rgba(255, 255, 255, 0.40);
+    --chart-refBold: #f59e0b;     
+    --chart-refSubtle: rgba(245, 158, 11, 0.45);
+    --chart-fill50: rgba(245, 158, 11, 0.075);
+    --chart-tooltipBg: rgba(17, 17, 17, 0.95);
+    --chart-tooltipBorder: rgba(255, 255, 255, 0.08);
+    --chart-tooltipLabel: #e5e7eb;   
   }
+
 }
+
 
 body {
   background: var(--background);
@@ -36,7 +57,7 @@ body {
 }
 
 @layer base {
-  h1 { @apply text-6xl sm:text-8xl; }
-  h2 { @apply text-3xl sm:text-5xl  }
-  h3 { @apply text-2xl sm:text-3xl font-lexend-deca; }
+  h1 { @apply text-5xl sm:text-8xl; }
+  h2 { @apply text-2xl sm:text-5xl  }
+  h3 { @apply text-xl sm:text-3xl font-lexend-deca; }
 }

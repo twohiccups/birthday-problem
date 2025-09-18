@@ -18,10 +18,9 @@ export default function Formula() {
                     <Image
                         src="/assets/equation.svg"
                         alt="Equation showing product of decreasing choices"
-                        // base size + responsive bumps
                         width={750}
                         height={FORMULA_HEIGHT}
-                        className="invert max-w-full h-auto"
+                        className="dark:invert max-w-full h-auto"
                         priority
                     />
                 </FormulaDiv>
@@ -36,7 +35,7 @@ export default function Formula() {
                         alt="Equation for probability all birthdays are different"
                         width={750}
                         height={FORMULA_HEIGHT}
-                        className="invert max-w-full h-auto"
+                        className="dark:invert max-w-full h-auto"
                     />
                 </FormulaDiv>
 
@@ -48,7 +47,7 @@ export default function Formula() {
                         // make this one smaller so it doesn't dominate
                         width={350}
                         height={FORMULA_HEIGHT}
-                        className="invert max-w-full h-auto"
+                        className="dark:invert max-w-full h-auto"
                     />
                 </FormulaDiv>
             </div >
