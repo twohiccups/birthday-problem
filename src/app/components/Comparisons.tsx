@@ -87,8 +87,8 @@ export default function Comparisons() {
     const progress = Math.min(1, k / Math.max(1, edges.length));
 
     return (
-        <div className="w-full max-w-4xl mx-auto p-4" ref={wrapRef}>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
+        <div className="w-full mx-auto p-4" ref={wrapRef}>
+            <div className="flex flex-col   md:flex-row md:items-end md:justify-between gap-4 mb-4">
                 <div>
                     <h1 className="text-2xl font-semibold tracking-tight">Building K
                         <sub className="align-super text-base">{n}</sub>
@@ -149,73 +149,71 @@ export default function Comparisons() {
             </div>
 
             {/* Progress bar */}
-            <div className="h-2 w-full bg-gray-200/70 rounded-full overflow-hidden mb-4">
-                <motion.div
-                    className="h-full bg-black/80"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${progress * 100}%` }}
-                    transition={{ type: "tween", ease: "linear" }}
-                />
+            <div className="w-full max-w-xl">
+                <div className="h-2 bg-gray-200/70 rounded-full overflow-hidden mb-4">
+                    <motion.div
+                        className="h-full bg-black/80"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress * 100}%` }}
+                        transition={{ type: "tween", ease: "linear" }}
+                    />
+                </div>
+
+                <div className=" rounded-3xl border shadow-sm bg-white">
+                    <svg viewBox={`0 0 ${size} ${size}`} width="100%" height="100%" role="img" aria-label={`Complete graph with ${n} nodes`}>
+                        {/* Edges */}
+                        <g>
+                            {edges.slice(0, k).map(([i, j], idx) => {
+                                const a = pts[i];
+                                const b = pts[j];
+                                return (
+                                    <motion.line
+                                        key={`e-${i}-${j}`}
+                                        x1={a.x}
+                                        y1={a.y}
+                                        x2={b.x}
+                                        y2={b.y}
+                                        strokeWidth={1}
+                                        stroke="#1f2937"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 0.7 }}
+                                        transition={{ duration: 0.12, delay: Math.min(idx, 8) * 0.002 }}
+                                    />
+                                );
+                            })}
+                        </g>
+
+                        {/* Nodes */}
+                        <g>
+                            {pts.map((p, i) => (
+                                <AnimatePresence key={`n-${i}`}>
+                                    <motion.circle suppressHydrationWarning
+                                        cx={p.x}
+                                        cy={p.y}
+                                        r={6}
+                                        stroke="#111827"
+                                        strokeWidth={1}
+                                        fill="#ffffff"
+                                        initial={{ scale: 0, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ type: "spring", stiffness: 240, damping: 20 }}
+                                    />
+                                </AnimatePresence>
+                            ))}
+                        </g>
+
+                        {/* Optional labels (small to avoid clutter) */}
+                        <g>
+                            {pts.map((p, i) => (
+                                <text suppressHydrationWarning key={`t-${i}`} x={p.x} y={p.y - 12} fontSize={10} textAnchor="middle" fill="#374151">
+                                    {i + 1}
+                                </text>
+                            ))}
+                        </g>
+                    </svg>
+                </div>
             </div>
-
-            <div className="w-full rounded-3xl border shadow-sm bg-white">
-                <svg viewBox={`0 0 ${size} ${size}`} width="100%" height="100%" role="img" aria-label={`Complete graph with ${n} nodes`}>
-                    {/* Edges */}
-                    <g>
-                        {edges.slice(0, k).map(([i, j], idx) => {
-                            const a = pts[i];
-                            const b = pts[j];
-                            return (
-                                <motion.line
-                                    key={`e-${i}-${j}`}
-                                    x1={a.x}
-                                    y1={a.y}
-                                    x2={b.x}
-                                    y2={b.y}
-                                    strokeWidth={1}
-                                    stroke="#1f2937"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 0.7 }}
-                                    transition={{ duration: 0.12, delay: Math.min(idx, 8) * 0.002 }}
-                                />
-                            );
-                        })}
-                    </g>
-
-                    {/* Nodes */}
-                    <g>
-                        {pts.map((p, i) => (
-                            <AnimatePresence key={`n-${i}`}>
-                                <motion.circle suppressHydrationWarning
-                                    cx={p.x}
-                                    cy={p.y}
-                                    r={6}
-                                    stroke="#111827"
-                                    strokeWidth={1}
-                                    fill="#ffffff"
-                                    initial={{ scale: 0, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ type: "spring", stiffness: 240, damping: 20 }}
-                                />
-                            </AnimatePresence>
-                        ))}
-                    </g>
-
-                    {/* Optional labels (small to avoid clutter) */}
-                    <g>
-                        {pts.map((p, i) => (
-                            <text suppressHydrationWarning key={`t-${i}`} x={p.x} y={p.y - 12} fontSize={10} textAnchor="middle" fill="#374151">
-                                {i + 1}
-                            </text>
-                        ))}
-                    </g>
-                </svg>
-            </div>
-
-            <p className="mt-3 text-sm text-muted-foreground">
-                Total edges in K{n}: <span className="font-medium">{total}</span>. Formula: n(n−1)/2.
-            </p>
         </div>
     );
 }

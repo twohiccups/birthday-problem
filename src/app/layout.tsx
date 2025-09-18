@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Erica_One, Geist_Mono, Ultra } from "next/font/google";
+import { Erica_One, Geist_Mono, Lexend_Deca } from "next/font/google";
 import "./globals.css";
 
 
@@ -9,12 +9,13 @@ const ericaOne = Erica_One({
   variable: "--font-erica-one"
 });
 
-const ultra = Ultra({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-ultra"
-});
 
+const lexendDeca = Lexend_Deca({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-lexend-deca",
+
+})
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -34,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ericaOne.variable} ${geistMono.variable} ${ultra.variable} antialiased`}
+        className={`${ericaOne.variable} ${geistMono.variable} ${lexendDeca.variable} antialiased`}
       >
         {children}
       </body>

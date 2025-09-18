@@ -3,12 +3,10 @@
 html, body {
   height: 100%;
   scrollbar-width: none;
-  overflow: hidden;  
-  ::-webkit-scrollbar { width: 0; height: 0; }
-  
+  overflow: hidden;
+  /* If you really want no scrollbars in WebKit: */
+  &::-webkit-scrollbar { width: 0; height: 0; }
 }
-
-
 
 :root {
   --background: #ffffff;
@@ -21,6 +19,7 @@ html, body {
   --font-ultra: var(--font-ultra);
   --font-sans: var(--font-erica-one);
   --font-geist-mono: var(--font-geist-mono);
+  --font-lexend-deca: var(--font-lexend-deca);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,4 +33,10 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  h1 { @apply text-6xl sm:text-8xl; }
+  h2 { @apply text-3xl sm:text-5xl  }
+  h3 { @apply text-2xl sm:text-3xl font-lexend-deca; }
 }
