@@ -14,13 +14,12 @@ import CalendarControls from "./CalendarControls";
 
 function CalendarGrid({ year, birthdaysByMonth }: { year: number; birthdaysByMonth: BirthdaysByMonth }) {
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto px-1"> {/* outer handles scrolling */}
             <div
-                className="grid grid-cols-[repeat(4,theme(width.56))] gap-x-2 gap-y-4 justify-center overflow-x-auto"
+                className="grid w-max grid-cols-[repeat(4,theme(width.56))] gap-x-2 gap-y-4 justify-center"
                 role="grid"
                 aria-label={`All months for ${year}`}
             >
-
                 {Array.from({ length: 12 }, (_, m) => (
                     <Month
                         key={m}
@@ -34,6 +33,7 @@ function CalendarGrid({ year, birthdaysByMonth }: { year: number; birthdaysByMon
         </div>
     );
 }
+
 
 
 function Stat({ label, value, sublabel }: { label: string; value: string; sublabel?: string }) {
