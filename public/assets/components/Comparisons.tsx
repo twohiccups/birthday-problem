@@ -7,7 +7,7 @@ function calculateComparisons(n: number) {
     return (n * (n - 1)) / 2;
 }
 
-// Helper to generate node positions on a circle
+
 function circleLayout(n: number, size: number, margin = 24) {
     const r = (Math.min(size, size) - margin * 2) / 2;
     const cx = size / 2;
@@ -22,7 +22,6 @@ function circleLayout(n: number, size: number, margin = 24) {
     return { pts, r, cx, cy };
 }
 
-// Generate all undirected edges (i < j)
 function allEdges(n: number): Array<[number, number]> {
     const edges: Array<[number, number]> = [];
     for (let i = 0; i < n; i++) {
@@ -33,7 +32,6 @@ function allEdges(n: number): Array<[number, number]> {
     return edges;
 }
 
-// Small hook for intervals that respect React lifecycle
 function useTick(enabled: boolean, fps: number, onTick: () => void) {
     const saved = useRef(onTick);
     useEffect(() => {
@@ -56,7 +54,6 @@ export default function Comparisons() {
     const [playing, setPlaying] = useState(false);
     const [eps, setEps] = useState(40); // edges per second
 
-    // Compute dynamic canvas size based on container width
     const wrapRef = useRef<HTMLDivElement | null>(null);
     const [size, setSize] = useState(560);
     useEffect(() => {
@@ -79,7 +76,6 @@ export default function Comparisons() {
         });
     });
 
-    // Auto-pause when finished
     useEffect(() => {
         if (k >= edges.length && playing) setPlaying(false);
     }, [k, edges.length, playing]);
@@ -87,8 +83,8 @@ export default function Comparisons() {
     const progress = Math.min(1, k / Math.max(1, edges.length));
 
     return (
-        <div className="w-full mx-auto p-4" ref={wrapRef}>
-            <h2 className="my-6">Comparisons Demo</h2>
+        <div className="w-full mx-auto" ref={wrapRef}>
+            <h2 className="my-6 text-center ">Comparisons Demo</h2>
 
             {/* Controls */}
             <div className="mb-4">
@@ -169,12 +165,11 @@ export default function Comparisons() {
 
                 {/* Chart Card */}
                 <div className="relative rounded-3xl border shadow-sm bg-white">
-                    {/* Embedded total comparisons badge in the top-left corner */}
                     <div
-                        className="absolute top-2 left-2 z-10 rounded-full border bg-white/90 backdrop-blur px-3 py-1 text-xs font-medium text-gray-800 shadow-sm"
+                        className="font-lexend-deca absolute top-2 left-2 z-10 rounded-full border bg-white/90 backdrop-blur px-3 py-1 text-xs font-medium text-gray-800 shadow-sm"
                         aria-live="polite"
                     >
-                        Total: {total}
+                        Total comparisons: {total}
                     </div>
 
                     <svg
@@ -227,7 +222,6 @@ export default function Comparisons() {
                             ))}
                         </g>
 
-                        {/* Optional labels (small to avoid clutter) */}
                         <g>
                             {pts.map((p, i) => (
                                 <text

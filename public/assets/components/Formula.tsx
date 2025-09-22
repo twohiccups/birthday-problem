@@ -5,10 +5,10 @@ import { FormulaDiv } from "./FormulaDiv";
 export default function Formula() {
     const FORMULA_HEIGHT = 140;
     return (
-        <div className="w-[80%] mx-auto">
+        <div className="">
             <h2 className="text-center my-6">Formula</h2>
 
-            <div className="space-y-10 ">
+            <div className="space-y-10">
                 <h3>
                     Here&apos;s some math. The probability that at least two people in a group of n share a
                     birthday is

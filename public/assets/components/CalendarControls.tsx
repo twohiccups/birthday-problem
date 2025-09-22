@@ -58,14 +58,6 @@ export default function CalendarControls({
                 >
                     ×100
                 </button>
-                <button
-                    type="button"
-                    className="rounded-lg border border-neutral-300 px-3 py-2 shadow-sm hover:bg-neutral-50 active:scale-[.99]"
-                    onClick={() => onMultiRoll(1000)}
-                    aria-label="Run 1000 rolls"
-                >
-                    ×1000
-                </button>
             </div>
         </div>
     );

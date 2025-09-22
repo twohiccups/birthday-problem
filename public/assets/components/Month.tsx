@@ -1,5 +1,5 @@
 // app/components/Month.tsx
-import { BirthdayCountForMonth } from "../lib/calendar/types";
+import { BirthdayCountForMonth } from "../../../src/app/lib/calendar/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo } from "react";
 
@@ -17,9 +17,7 @@ const MONTH_NAMES = [
 
 const WEEKDAYS_SHORT = ["S", "M", "T", "W", "T", "F", "S"];
 
-// Tiny, stable hash to distribute days into 5 phases
 function phaseIndex(day: number, month: number, year: number, phases = 5) {
-    // Simple LCG-ish mix to keep it deterministic but spread out
     let h = (day + 31 * (month + 12 * year)) >>> 0;
     h ^= (h << 13) ^ (h >>> 17) ^ (h << 5);
     return Math.abs(h) % phases;
@@ -44,7 +42,6 @@ export default function Month({
 
     const collisions = Object.entries(birthdaysForMonth).filter(([_, c]) => c > 1).length;
 
-    // Precompute phase delays for all highlighted days
     const delayMap = useMemo(() => {
         const map = new Map<number, number>();
         const PHASES = 4;
@@ -58,7 +55,6 @@ export default function Month({
         return map;
     }, [birthdaysForMonth, month, year]);
 
-    // A key that bumps when the highlight set changes — replays the wave
     const waveKey = useMemo(() => {
         const highlighted = Object.entries(birthdaysForMonth)
             .filter(([_, c]) => c > 0)
@@ -69,6 +65,7 @@ export default function Month({
     }, [birthdaysForMonth, month, year]);
 
     return (
+
         <div
             className="inline-block select-none rounded-md border border-neutral-200 bg-white text-neutral-900 shadow-sm w-56"
             aria-label={`${MONTH_NAMES[month]} ${year}`}
@@ -76,7 +73,7 @@ export default function Month({
         >
             {/* Header */}
             <div
-                className={`relative text-center font-semibold tracking-wide text-neutral-900 py-2 rounded-t-md ${colorClass}`}
+                className={`relative text-center font-light tracking-wide text-neutral-900 py-2 rounded-t-md ${colorClass}`}
             >
                 <span>{MONTH_NAMES[month].toUpperCase()}</span>
 
@@ -88,7 +85,7 @@ export default function Month({
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.8, opacity: 0 }}
                             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-5 min-w-5 items-center justify-center rounded-full border border-red-400 bg-red-100 px-1 text-xs font-bold text-red-700"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-5 min-w-5 items-center justify-center rounded-full border border-red-400 bg-red-100 font-lexend-deca px-1 text-xs font-bold text-red-700"
                             aria-label={`${collisions} day(s) in ${MONTH_NAMES[month]} have collisions`}
                             title={`${collisions} day(s) have collisions`}
                         >
@@ -101,7 +98,7 @@ export default function Month({
             {/* Weekday row */}
             <div className="grid grid-cols-7 text-center text-xs text-neutral-600 gap-y-1 px-2 pt-2">
                 {WEEKDAYS_SHORT.map((d, i) => (
-                    <div key={`${d}-${i}`} className="font-semibold">
+                    <div key={`${d}-${i}`}>
                         {d}
                     </div>
                 ))}
@@ -124,7 +121,6 @@ export default function Month({
 
                         const highlightColor = count > 1 ? "bg-red-500" : "bg-sky-500";
 
-                        // Phase delay for this cell (0..4) * 30ms — makes 5 “stages”
                         const delay = !hidden && count > 0 ? (delayMap.get(day!) ?? 0) : 0;
 
                         return (
@@ -154,7 +150,7 @@ export default function Month({
                                     )}
                                 </AnimatePresence>
 
-                                <span className={`relative z-10 ${count > 0 ? "text-black font-medium" : ""}`}>
+                                <span className={`relative z-10 ${count > 0 ? "text-black font-light" : ""}`}>
                                     {hidden ? "•" : day}
                                 </span>
 
@@ -166,7 +162,7 @@ export default function Month({
                                             animate={{ y: 0, opacity: 1, scale: 1 }}
                                             exit={{ y: -6, opacity: 0, scale: 0.8 }}
                                             transition={{ type: "spring", stiffness: 350, damping: 18, delay }}
-                                            className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-white bg-red-600 text-[10px] font-bold text-white shadow"
+                                            className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-white bg-red-600 text-[10px] font-bold z-50 font-lexend-deca text-white shadow"
                                             aria-label={`${count} birthdays`}
                                         >
                                             {count}

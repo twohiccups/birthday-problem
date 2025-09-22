@@ -1,17 +1,28 @@
 
-/**
-* Generate a random set of birthdays for a given year.
-*/
-
+// 0-11 months
 export type BirthdaysByMonth = Record<number, Record<number, number>>
+
+export function getTotalSharedDays(bm: BirthdaysByMonth) {
+    return Object.values(bm).reduce(
+        (acc, b) => acc + Object.values(b).filter((count) => count > 1).length, 0)
+}
+
+
+export function getMaxOnADay(bm: BirthdaysByMonth) {
+    return Object.values(bm).reduce(
+        (acc, b) => {
+            return Math.max(acc, ...Object.values(b))
+        }, 0)
+}
+
+
+
 
 export function generateBirthdays(n: number, year: number) {
     const isLeap = new Date(year, 1, 29).getMonth() === 1; // Feb has 29
     const daysInYear = isLeap ? 366 : 365;
 
     const byMonth: BirthdaysByMonth = {};
-
-
     for (let i = 0; i < n; i++) {
         const dOY = Math.floor(Math.random() * daysInYear); // 0..daysInYear-1
         const date = new Date(year, 0, 1);
@@ -46,3 +57,11 @@ export function collisionProbability(n: number) {
     for (let i = 1; i < n; i++) p *= (365 - i) / 365;
     return 1 - p;
 }
+
+export function yearHasCollision(bm: BirthdaysByMonth): boolean {
+    for (const month of Object.values(bm)) {
+        for (const count of Object.values(month)) if (count > 1) return true;
+    }
+    return false;
+}
+

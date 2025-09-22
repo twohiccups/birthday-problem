@@ -1,53 +1,44 @@
 "use client";
-import { useMemo, useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Month from "./Month";
 import {
     BirthdaysByMonth,
     collisionProbability,
     generateBirthdays,
     getColorClass,
-} from "../lib/calendar/util";
+    getMaxOnADay,
+    getTotalSharedDays,
+    yearHasCollision,
+} from "@/app/lib/calendar/util";
 import CalendarControls from "./CalendarControls";
 
-// --- Presentational calendar (no state) ---
-function CalendarGrid({
-    year,
-    birthdaysByMonth,
-}: {
-    year: number;
-    birthdaysByMonth: BirthdaysByMonth;
-}) {
+function CalendarGrid({ year, birthdaysByMonth }: { year: number; birthdaysByMonth: BirthdaysByMonth }) {
     return (
-        <div
-            className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            role="grid"
-            aria-label={`All months for ${year}`}
-        >
-            {Array.from({ length: 12 }, (_, m) => (
-                <Month
-                    key={m}
-                    month={m}
-                    year={year}
-                    colorClass={getColorClass(m)}
-                    birthdaysForMonth={birthdaysByMonth[m] || {}}
-                />
-            ))}
+        <div className="overflow-x-auto">
+            <div
+                className="grid grid-cols-[repeat(4,theme(width.56))] gap-x-2 gap-y-4 justify-center overflow-x-auto"
+                role="grid"
+                aria-label={`All months for ${year}`}
+            >
+
+                {Array.from({ length: 12 }, (_, m) => (
+                    <Month
+                        key={m}
+                        month={m}
+                        year={year}
+                        colorClass={getColorClass(m)}
+                        birthdaysForMonth={birthdaysByMonth[m] || {}}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
 
-// --- Helper: check for any duplicates ---
-function hasCollision(bm: BirthdaysByMonth): boolean {
-    for (const month of Object.values(bm)) {
-        for (const count of Object.values(month)) if (count > 1) return true;
-    }
-    return false;
-}
 
-// --- Stats UI ---
 function Stat({ label, value, sublabel }: { label: string; value: string; sublabel?: string }) {
     return (
-        <div className="rounded-2xl  p-3 shadow-sm">
+        <div className="rounded-2xl p-3 shadow-sm">
             <div className="text-xs uppercase tracking-wide ">{label}</div>
             <div className="mt-1 text-2xl font-semibold tabular-nums">{value}</div>
             {sublabel ? (
@@ -61,33 +52,13 @@ export default function BirthdayParadoxSection() {
     const YEAR = 2025;
     const [n, setN] = useState<number>(23);
     const [birthdaysByMonth, setBirthdaysByMonth] = useState<BirthdaysByMonth>({});
-
     const [numRollsWithCollision, setNumRollsWithCollision] = useState<number>(0);
     const [totalNumRolls, setTotalNumRolls] = useState<number>(0);
 
-    const totalSharedDays = useMemo(
-        () =>
-            Object.values(birthdaysByMonth).reduce(
-                (acc, month) => acc + Object.values(month).filter((c) => c > 1).length,
-                0
-            ),
-        [birthdaysByMonth]
-    );
-
-    const maxOnADay = useMemo(
-        () =>
-            Object.values(birthdaysByMonth).reduce(
-                (acc, month) => Math.max(acc, ...Object.values(month), 0),
-                0
-            ),
-        [birthdaysByMonth]
-    );
-
-    const theoreticalP = useMemo(() => collisionProbability(n), [n]);
-
-    const empiricalP = useMemo(() => {
-        return (totalNumRolls > 0 ? numRollsWithCollision / totalNumRolls : 0)
-    }, [totalNumRolls, numRollsWithCollision])
+    const totalSharedDays = getTotalSharedDays(birthdaysByMonth);
+    const maxOnADay = getMaxOnADay(birthdaysByMonth);
+    const theoreticalP = collisionProbability(n);
+    const empiricalP = totalNumRolls > 0 ? numRollsWithCollision / totalNumRolls : 0
 
 
     useEffect(() => {
@@ -100,7 +71,7 @@ export default function BirthdayParadoxSection() {
         const sample = generateBirthdays(n, YEAR);
         setBirthdaysByMonth(sample);
         setTotalNumRolls((t) => t + 1);
-        if (hasCollision(sample)) {
+        if (yearHasCollision(sample)) {
             setNumRollsWithCollision((c) => c + 1)
         }
     };
@@ -111,7 +82,7 @@ export default function BirthdayParadoxSection() {
             let last: BirthdaysByMonth | null = null;
             for (let i = 0; i < times; i++) {
                 const s = generateBirthdays(n, YEAR);
-                if (hasCollision(s)) localCollisions++;
+                if (yearHasCollision(s)) localCollisions++;
                 last = s;
             }
             if (last) setBirthdaysByMonth(last);
@@ -122,18 +93,19 @@ export default function BirthdayParadoxSection() {
     );
 
     return (
-        <section className="px-4">
+        <section className="px-4 space-y-10">
+            <h2 className="text-center">Birthday Simulator</h2>
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] xl:grid-cols-[minmax(0,1fr)_26rem]">
-                <div className="min-w-0">
+                <div className="min-w-0 order-2 md:order-1">
                     <CalendarGrid year={YEAR} birthdaysByMonth={birthdaysByMonth} />
                 </div>
-
                 <aside
-                    className="min-w-[24rem] xl:min-w-[26rem] rounded-2xl  p-5 shadow-sm"
+                    className="order-1 md:order-2
+                        min-w-0 lg:min-w-[24rem] xl:min-w-[26rem]
+                        w-full lg:w-auto rounded-2xl shadow-sm"
                     aria-label="Controls and statistics"
                 >
-                    <h2 className="my-6">Try yourself</h2>
-                    <h3 className="">Click roll to generate a random set of birthdays. See the </h3>
+                    <h3 className="">Click &quot;Roll&quot; to generate a random set of birthdays. Collisions will be marked with red color.</h3>
                     <div className="mt-4">
                         <CalendarControls n={n} setN={setN} onRoll={roll} onMultiRoll={multiRoll} />
                     </div>

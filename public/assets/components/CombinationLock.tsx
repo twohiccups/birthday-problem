@@ -40,7 +40,6 @@ function DigitReel({
             ref={wrapperRef}
             className="relative w-12 sm:w-14 md:w-16 h-16 sm:h-20 md:h-24 overflow-hidden select-none rounded-xl bg-white/60 dark:bg-white/5 shadow-inner border border-black/5 backdrop-blur flex items-center justify-center"
         >
-            {/* Static gradient masks for a subtle slot-machine feel */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/5" />
 
             {/* Reel */}

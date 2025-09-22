@@ -6,7 +6,7 @@ import {
     ReferenceLine, ReferenceDot, ReferenceArea, Label,
 } from "recharts";
 import clsx from "clsx";
-import { collisionProbability } from "../lib/calendar/util";
+import { collisionProbability } from "../../../src/app/lib/calendar/util";
 
 const N_MAX = 80;
 const N_AT_50 = 23;
