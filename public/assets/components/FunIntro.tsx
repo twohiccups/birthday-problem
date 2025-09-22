@@ -1,6 +1,6 @@
 "use client";
 
-import {useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,7 +44,7 @@ const ANIMALS: Animal[] = [
         width: 120,
         height: 300,
         text: "Tweet fact: I share a birthday with my twin!",
-        bubbleClass: "-top-26 -left-50",
+        bubbleClass: "-top-40 -left-50",
         reflect: true
     },
     {
@@ -54,7 +54,7 @@ const ANIMALS: Animal[] = [
         width: 120,
         height: 300,
         text: "Statistically speaking... I can't be only one",
-        bubbleClass: "-top-12 -left-50",
+        bubbleClass: "-top-40 -left-50",
         reflect: true
 
     },

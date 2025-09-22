@@ -52,6 +52,7 @@ export const CollisionProbabilityGraph = forwardRef<CollisionGraphHandle, { clas
                     "tabular-nums font-geist-mono w-ful min-h-[280px] rounded-2xl p-3",
                     "bg-gradient-to-b from-white/5 to-white/0",
                     "dark:from-white/5 dark:to-white/0",
+                    "outline-none [ -webkit-tap-highlight-color:transparent ]",
                     className
                 )}>
                 <ResponsiveContainer width="100%" height={400}>
