@@ -44,7 +44,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section className="h-1/4" >{' '}
+      <Section >{' '}
         <h2 className="text-center">Thank you</h2>
         <h2 className="text-center">More stuff coming soon!</h2>
       </Section>
