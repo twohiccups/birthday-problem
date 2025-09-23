@@ -53,7 +53,7 @@ const ANIMALS: Animal[] = [
         alt: "Elk",
         width: 96,
         height: 300,
-        text: "Statistically speaking... I can't be only one",
+        text: "Statistic-elk-ly speaking... I can't be only one",
         bubbleClass: "-top-40 -left-50",
         reflect: true
 

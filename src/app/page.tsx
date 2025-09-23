@@ -1,13 +1,13 @@
 'use client'
 
-import Calendar from "../../public/assets/components/Calendar";
-import { CollisionProbabilityGraph } from "../../public/assets/components/CollisionProbabilityGraph";
-import Comparisons from "../../public/assets/components/Comparisons";
-import Section from "../../public/assets/components/Section";
-import Formula from "../../public/assets/components/Formula";
-import IntuitionText from "../../public/assets/components/IntuitionText";
-import FunIntro from "../../public/assets/components/FunIntro";
-import CollisionProbabilityText from "../../public/assets/components/CollisionProbabilityText";
+import Calendar from "./components/Calendar";
+import { CollisionProbabilityGraph } from "./components/CollisionProbabilityGraph";
+import Comparisons from "./components/Comparisons";
+import Section from "./components/Section";
+import Formula from "./components/Formula";
+import IntuitionText from "./components/IntuitionText";
+import FunIntro from "./components/FunIntro";
+import CollisionProbabilityText from "./components/CollisionProbabilityText";
 
 export default function Home() {
   return (

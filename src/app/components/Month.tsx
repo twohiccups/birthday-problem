@@ -1,5 +1,5 @@
 // app/components/Month.tsx
-import { BirthdayCountForMonth } from "../../../src/app/lib/calendar/types";
+import { BirthdayCountForMonth } from "../lib/calendar/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo } from "react";
 
