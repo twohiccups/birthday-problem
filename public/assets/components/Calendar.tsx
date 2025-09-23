@@ -160,7 +160,7 @@ export default function BirthdayParadoxSection() {
                 </div>
             </aside>
 
-            <div className="min-w-0 overflow-x-auto w-full flex justify-center">
+            <div className="min-w-0 overflow-x-auto block sm:flex justify-center">
                 <CalendarGrid year={YEAR} birthdaysByMonth={birthdaysByMonth} />
             </div>
         </section>

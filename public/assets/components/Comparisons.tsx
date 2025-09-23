@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "./Button";
+import NumberField from "./NumberField";
 
 function calculateComparisons(n: number) {
     return (n * (n - 1)) / 2;
@@ -111,23 +112,15 @@ export default function Comparisons() {
 
                     {/* People input */}
                     <div className="flex flex-col items-start font-lexend-deca relative shrink-0">
-                        <label
-                            className="text-sm absolute -top-5 left-0 px-1"
-                            htmlFor="comparisons-n"
-                        >
-                            People
-                        </label>
-                        <input
+                        <NumberField
                             id="comparisons-n"
-                            type="number"
-                            className="h-9 w-24 rounded-md border border-neutral-300 px-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
+                            label="People"
+                            value={n}
                             min={2}
                             max={40}
-                            value={n}
-                            onChange={(e) => {
-                                const nv = Math.max(2, Math.min(40, parseInt(e.target.value || "2", 10)));
-                                setN(nv);
-                                setK(0);
+                            onCommit={(v) => {
+                                setN(v);
+                                setK(0); // your reset behavior stays intact
                             }}
                         />
                     </div>
