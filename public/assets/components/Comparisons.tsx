@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Button from "./Button";
 
 function calculateComparisons(n: number) {
     return (n * (n - 1)) / 2;
@@ -90,24 +91,23 @@ export default function Comparisons() {
                 <div className="flex flex-wrap items-center gap-3 sm:gap-4 py-1">
 
                     {/* Play / Pause */}
-                    <button
-                        className="px-3 text-xs sm:text-base py-1.5 rounded-2xl shadow-sm border hover:shadow transition min-w-20 shrink-0"
+
+                    <Button
                         onClick={() => setPlaying((p) => !p)}
                         aria-label={playing ? "Pause" : "Play"}
                     >
-                        {playing ? "Pause" : "Play"}
-                    </button>
 
-                    {/* Reset */}
-                    <button
-                        className="px-3 text-xs sm:text-base py-1.5 rounded-2xl shadow-sm border hover:shadow transition shrink-0"
+                        {playing ? "Pause" : "Play"}
+
+                    </Button>
+
+                    <Button
                         onClick={() => {
                             setK(0);
                             setPlaying(false);
-                        }}
-                    >
+                        }}>
                         Reset
-                    </button>
+                    </Button>
 
                     {/* People input */}
                     <div className="flex flex-col items-start font-lexend-deca relative shrink-0">
@@ -245,6 +245,6 @@ export default function Comparisons() {
                     </svg>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

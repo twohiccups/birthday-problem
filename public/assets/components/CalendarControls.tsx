@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Button from "./Button";
 
 export default function CalendarControls({
     n,
@@ -13,10 +14,10 @@ export default function CalendarControls({
     onMultiRoll: (times: number) => void;
 }) {
     return (
-        <div className="flex flex-wrap items-end gap-4 border-6 rounded-xlborder-neutral-200 p-4 font-lexend-deca">
-            <div>
-                <label htmlFor="n" className="block text-sm font-medium">
-                    Number of people
+        <div className="flex flex-wrap items-end gap-2 sm:gap-4 rounded-xl border-3 border-neutral-200 p-2 sm:p-4 font-lexend-deca">
+            <div className="flex-1 min-w-[120px]">
+                <label htmlFor="n" className="block text-xs sm:text-sm font-medium">
+                    People
                 </label>
                 <input
                     id="n"
@@ -24,41 +25,31 @@ export default function CalendarControls({
                     min={1}
                     max={10000}
                     value={n}
-                    onChange={(e) => setN(Math.max(1, Math.min(10000, Number(e.target.value))))}
-                    className="mt-1 w-40 rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
+                    onChange={(e) =>
+                        setN(Math.max(1, Math.min(10000, Number(e.target.value))))
+                    }
+                    className="mt-1 w-full sm:w-40 rounded-md border-3 border-neutral-300 px-2 py-1.5 sm:px-3 sm:py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm"
                     aria-describedby="n-help"
                 />
-                <p id="n-help" className="mt-1 text-xs">
-                    Try classic values like 23 or 50.
+                <p id="n-help" className="mt-1 text-[10px] sm:text-xs">
+                    Try 23 or 50.
                 </p>
             </div>
 
-            <div className="flex items-center gap-2">
-                <button
-                    type="button"
-                    className="font-sans rounded-lg border border-neutral-300 px-4 py-2 shadow-sm hover:bg-neutral-50 active:scale-[.99]"
-                    aria-label="Generate a new random set of birthdays"
-                    onClick={onRoll}
-                >
-                    Roll
-                </button>
-                <button
-                    type="button"
-                    className="rounded-lg border border-neutral-300 px-3 py-2 shadow-sm hover:bg-neutral-50 active:scale-[.99]"
-                    onClick={() => onMultiRoll(10)}
-                    aria-label="Run 10 rolls"
-                >
-                    ×10
-                </button>
-                <button
-                    type="button"
-                    className="rounded-lg border border-neutral-300 px-3 py-2 shadow-sm hover:bg-neutral-50 active:scale-[.99]"
-                    onClick={() => onMultiRoll(100)}
-                    aria-label="Run 100 rolls"
-                >
-                    ×100
-                </button>
+            <div className="flex items-center gap-1 sm:gap-2">
+                <Button
+                    onClick={onRoll}> Roll
+                </Button>
+                <Button
+                    onClick={() => onMultiRoll(10)}>
+                    x10
+                </Button>
+                <Button
+                    onClick={() => onMultiRoll(100)}>
+                    x100
+                </Button>
+
             </div>
-        </div>
+        </div >
     );
 }

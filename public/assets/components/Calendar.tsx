@@ -42,9 +42,9 @@ function CalendarGrid({ year, birthdaysByMonth }: { year: number; birthdaysByMon
 
 function Stat({ label, value, sublabel }: { label: string; value: string; sublabel?: string }) {
     return (
-        <div className="rounded-2xl p-3 shadow-sm">
+        <div className="rounded-2xl p-2 sm:p-3 shadow-sm">
             <div className="text-xs uppercase tracking-wide ">{label}</div>
-            <div className="mt-1 text-2xl font-semibold tabular-nums">{value}</div>
+            <div className="mt-1 text-lg sm:text-2xl font-semibold tabular-nums">{value}</div>
             {sublabel ? (
                 <div className="mt-1 text-xs">{sublabel}</div>
             ) : null}
@@ -117,20 +117,20 @@ export default function BirthdayParadoxSection() {
                     <div className="mt-5 space-y-4 font-lexend-deca">
                         <div>
                             <div className="mt-2 grid grid-cols-2 gap-2">
-                                <div className="border-6 rounded-xl">
+                                <div className="border-3   rounded-xl">
                                     <Stat label="Empirical P" value={`${(empiricalP * 100).toFixed(2)}%`} sublabel={`(${numRollsWithCollision}/${totalNumRolls} runs)`} />
                                 </div>
-                                <div className="border-6 rounded-xl">
+                                <div className="border-3   rounded-xl">
                                     <Stat label="Theoretical P" value={`${(theoreticalP * 100).toFixed(2)}%`} />
                                 </div>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-2">
-                            <div className="border-6 rounded-xl">
+                            <div className="border-3 rounded-xl">
                                 <Stat label="Shared days" value={`${totalSharedDays}`} sublabel="Days with ≥2 birthdays" />
                             </div>
-                            <div className="border-6 rounded-xl">
+                            <div className="border-3 rounded-xl">
                                 <Stat label="Max on a day" value={`${maxOnADay}`} sublabel="Largest same‑day crowd" />
                             </div>
                         </div>
