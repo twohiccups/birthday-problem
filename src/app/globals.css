@@ -29,6 +29,7 @@ html, body {
   --font-sans: var(--font-erica-one);
   --font-geist-mono: var(--font-geist-mono);
   --font-lexend-deca: var(--font-lexend-deca);
+  --text-tiny: 0.7rem;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -67,13 +67,15 @@ export default function Month({
     return (
 
         <div
-            className="inline-block select-none rounded-md border border-neutral-200 bg-white text-neutral-900 shadow-sm w-56"
+            className="font-lexend-deca text-tiny sm:text-xs sm:font-sans inline-block w-36 sm:w-56 select-none rounded-md border border-neutral-200 
+             bg-white text-neutral-900 shadow-sm"
             aria-label={`${MONTH_NAMES[month]} ${year}`}
             role="group"
         >
+
             {/* Header */}
             <div
-                className={`relative text-center font-light tracking-wide text-neutral-900 py-2 rounded-t-md ${colorClass}`}
+                className={` font-sans relative text-center text-base sm:text-lg font-bold  sm:font-light tracking-wide text-neutral-900 py-0 sm:py-1 rounded-t-md ${colorClass}`}
             >
                 <span>{MONTH_NAMES[month].toUpperCase()}</span>
 
@@ -85,7 +87,7 @@ export default function Month({
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.8, opacity: 0 }}
                             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-5 min-w-5 items-center justify-center rounded-full border border-red-400 bg-red-100 font-lexend-deca px-1 text-xs font-bold text-red-700"
+                            className="absolute right-2 top-1/2 -translate-y-1/2   text-tiny sm:text-xs inline-flex h-3 w-3  sm:min-w-5 items-center justify-center rounded-full border border-red-400 bg-red-100 font-lexend-deca  font-bold text-red-700"
                             aria-label={`${collisions} day(s) in ${MONTH_NAMES[month]} have collisions`}
                             title={`${collisions} day(s) have collisions`}
                         >
@@ -96,7 +98,7 @@ export default function Month({
             </div>
 
             {/* Weekday row */}
-            <div className="grid grid-cols-7 text-center text-xs text-neutral-600 gap-y-1 px-2 pt-2">
+            <div className="grid grid-cols-7 text-center  text-tiny sm:text-xs text-neutral-600 gap-y-1 pt-2">
                 {WEEKDAYS_SHORT.map((d, i) => (
                     <div key={`${d}-${i}`}>
                         {d}
@@ -105,74 +107,73 @@ export default function Month({
             </div>
 
             {/* Dates grid */}
-            <div className="grid grid-cols-7 text-center text-sm px-1 pb-1">
-                {weeks.map((week, wi) =>
-                    week.map((day, di) => {
-                        const hidden = day == null;
-                        const count = hidden ? 0 : birthdaysForMonth[day] || 0;
+            <div className="grid grid-cols-7 text-center text-tiny sm:text-base sm:gap-y-1 sm:pb-1">                {weeks.map((week, wi) =>
+                week.map((day, di) => {
+                    const hidden = day == null;
+                    const count = hidden ? 0 : birthdaysForMonth[day] || 0;
 
-                        const aria = hidden
-                            ? { "aria-hidden": true as const }
-                            : {
-                                "aria-label": `${MONTH_NAMES[month]} ${day}, ${year}${count > 0 ? ` — ${count} birthday${count > 1 ? "s" : ""}` : ""
-                                    }`,
-                                role: "gridcell",
-                            };
+                    const aria = hidden
+                        ? { "aria-hidden": true as const }
+                        : {
+                            "aria-label": `${MONTH_NAMES[month]} ${day}, ${year}${count > 0 ? ` — ${count} birthday${count > 1 ? "s" : ""}` : ""
+                                }`,
+                            role: "gridcell",
+                        };
 
-                        const highlightColor = count > 1 ? "bg-red-500" : "bg-sky-500";
+                    const highlightColor = count > 1 ? "bg-red-500" : "bg-sky-500";
 
-                        const delay = !hidden && count > 0 ? (delayMap.get(day!) ?? 0) : 0;
+                    const delay = !hidden && count > 0 ? (delayMap.get(day!) ?? 0) : 0;
 
-                        return (
-                            <div
-                                key={`${wi}-${di}`}
-                                className={`relative h-7 flex items-center justify-center ${hidden ? "text-transparent" : "text-neutral-900"
-                                    }`}
-                                {...aria}
-                            >
-                                <AnimatePresence mode="popLayout">
-                                    {count > 0 && !hidden && (
-                                        <motion.div
-                                            key={`hl-${waveKey}-${day}`}
-                                            className={`absolute inset-0 rounded-md ${highlightColor}`}
-                                            initial={{ scale: 0.6, opacity: 0 }}
-                                            animate={{ scale: 1, opacity: 1 }}
-                                            exit={{ scale: 0.9, opacity: 0 }}
-                                            transition={{
-                                                type: "spring",
-                                                stiffness: 260,
-                                                damping: 18,
-                                                mass: 0.3,
-                                                delay,
-                                            }}
-                                            aria-hidden="true"
-                                        />
-                                    )}
-                                </AnimatePresence>
+                    return (
+                        <div
+                            key={`${wi}-${di}`}
+                            className={`relative h-4 sm:h-5 flex items-center justify-center ${hidden ? "text-transparent" : "text-neutral-900"
+                                }`}
+                            {...aria}
+                        >
+                            <AnimatePresence mode="popLayout">
+                                {count > 0 && !hidden && (
+                                    <motion.div
+                                        key={`hl-${waveKey}-${day}`}
+                                        className={`absolute inset-0 rounded-md ${highlightColor}`}
+                                        initial={{ scale: 0.6, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        exit={{ scale: 0.9, opacity: 0 }}
+                                        transition={{
+                                            type: "spring",
+                                            stiffness: 260,
+                                            damping: 18,
+                                            mass: 0.3,
+                                            delay,
+                                        }}
+                                        aria-hidden="true"
+                                    />
+                                )}
+                            </AnimatePresence>
 
-                                <span className={`relative z-10 ${count > 0 ? "text-black font-light" : ""}`}>
-                                    {hidden ? "•" : day}
-                                </span>
+                            <span className={`relative z-10 ${count > 0 ? "text-black font-light" : ""}`}>
+                                {hidden ? "•" : day}
+                            </span>
 
-                                <AnimatePresence>
-                                    {!hidden && count > 1 && (
-                                        <motion.span
-                                            key={`badge-${waveKey}-${day}`}
-                                            initial={{ y: -6, opacity: 0, scale: 0.8 }}
-                                            animate={{ y: 0, opacity: 1, scale: 1 }}
-                                            exit={{ y: -6, opacity: 0, scale: 0.8 }}
-                                            transition={{ type: "spring", stiffness: 350, damping: 18, delay }}
-                                            className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-white bg-red-600 text-[10px] font-bold z-50 font-lexend-deca text-white shadow"
-                                            aria-label={`${count} birthdays`}
-                                        >
-                                            {count}
-                                        </motion.span>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        );
-                    })
-                )}
+                            <AnimatePresence>
+                                {!hidden && count > 1 && (
+                                    <motion.span
+                                        key={`badge-${waveKey}-${day}`}
+                                        initial={{ y: -6, opacity: 0, scale: 0.8 }}
+                                        animate={{ y: 0, opacity: 1, scale: 1 }}
+                                        exit={{ y: -6, opacity: 0, scale: 0.8 }}
+                                        transition={{ type: "spring", stiffness: 350, damping: 18, delay }}
+                                        className="absolute -top-1 -right-1 flex h-3 w-3 sm:h-5 sm:w-5 items-center justify-center rounded-full border border-white bg-red-600 text-[10px] font-bold z-50 font-lexend-deca text-white shadow"
+                                        aria-label={`${count} birthdays`}
+                                    >
+                                        {count}
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    );
+                })
+            )}
             </div>
         </div>
     );

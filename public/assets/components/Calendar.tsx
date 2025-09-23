@@ -14,26 +14,30 @@ import CalendarControls from "./CalendarControls";
 
 function CalendarGrid({ year, birthdaysByMonth }: { year: number; birthdaysByMonth: BirthdaysByMonth }) {
     return (
-        <div className="overflow-x-auto px-1"> {/* outer handles scrolling */}
-            <div
-                className="grid w-max grid-cols-[repeat(4,theme(width.56))] gap-x-2 gap-y-4 justify-center"
-                role="grid"
-                aria-label={`All months for ${year}`}
-            >
-                {Array.from({ length: 12 }, (_, m) => (
-                    <Month
-                        key={m}
-                        month={m}
-                        year={year}
-                        colorClass={getColorClass(m)}
-                        birthdaysForMonth={birthdaysByMonth[m] || {}}
-                    />
-                ))}
-            </div>
+        <div
+            className="
+    sm:w-max
+    origin-top-left
+    grid grid-cols-[repeat(4,theme(width.32))] 
+    sm:grid-cols-[repeat(4,theme(width.56))]
+    gap-x-5 sm:gap-x-2 gap-y-1 sm:gap-y-4 justify-start
+  "
+            role="grid"
+            aria-label={`All months for ${year}`}
+        >
+            {Array.from({ length: 12 }, (_, m) => (
+                <Month
+                    key={m}
+                    month={m}
+                    year={year}
+                    colorClass={getColorClass(m)}
+                    birthdaysForMonth={birthdaysByMonth[m] || {}}
+                />
+            ))}
         </div>
+
     );
 }
-
 
 
 function Stat({ label, value, sublabel }: { label: string; value: string; sublabel?: string }) {
@@ -96,7 +100,7 @@ export default function BirthdayParadoxSection() {
         <section className="px-4 space-y-10">
             <h2 className="text-center">Birthday Simulator</h2>
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] xl:grid-cols-[minmax(0,1fr)_26rem]">
-                <div className="min-w-0 order-2 md:order-1">
+                <div className="min-w-0 order-2 md:order-1 overflow-x-scroll">
                     <CalendarGrid year={YEAR} birthdaysByMonth={birthdaysByMonth} />
                 </div>
                 <aside
