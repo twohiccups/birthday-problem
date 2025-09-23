@@ -76,7 +76,7 @@ export default function FunIntro() {
         <>
             <div className="flex flex-col">
                 <div className="flex flex-col gap-6 text-center">
-                    <h1 className="mt-2 mb-2">The Birthday Problem</h1>
+                    <h1 className="mt-6 mb-2">The Birthday Problem</h1>
                     <h2>Picture yourself at a party...</h2>
                     <h2>What are the chances that two guests share the same birthday?</h2>
                     <div className="w-70 mx-auto text-sm p-2 border-2 rounded-full text-wrap bg-white/10 backdrop-blur">
