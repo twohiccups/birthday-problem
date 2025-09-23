@@ -9,7 +9,7 @@ export default function Formula() {
             <h2 className="text-center my-6">Formula</h2>
 
             <div className="space-y-10">
-                <h3>
+                <h3 className="text-justify">
                     Here&apos;s some math. The probability that at least two people in a group of n share a
                     birthday is
                 </h3>
@@ -25,7 +25,7 @@ export default function Formula() {
                     />
                 </FormulaDiv>
 
-                <h3>
+                <h3 className="text-justify">
                     Since the first person has 365 choices, the second 364, the third 363, etc...
                 </h3>
 

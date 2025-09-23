@@ -105,7 +105,7 @@ export default function BirthdayParadoxSection() {
                         w-full lg:w-auto rounded-2xl shadow-sm"
                     aria-label="Controls and statistics"
                 >
-                    <h3 className="">Click &quot;Roll&quot; to generate a random set of birthdays. Collisions will be marked with red color.</h3>
+                    <h3 className="text-justify">Click &quot;Roll&quot; to generate a random set of birthdays. Collisions will be marked with red color.</h3>
                     <div className="mt-4">
                         <CalendarControls n={n} setN={setN} onRoll={roll} onMultiRoll={multiRoll} />
                     </div>

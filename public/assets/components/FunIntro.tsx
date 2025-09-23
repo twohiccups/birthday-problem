@@ -23,7 +23,7 @@ const ANIMALS: Animal[] = [
         key: "bear",
         src: "/assets/animal1.png",
         alt: "Bear",
-        width: 120,
+        width: 123,
         height: 300,
         text: "It's unbearable to share the same birthday!",
         bubbleClass: "-top-40 -right-20",
@@ -32,7 +32,7 @@ const ANIMALS: Animal[] = [
         key: "goat",
         src: "/assets/animal2.png",
         alt: "Goat",
-        width: 100,
+        width: 93,
         height: 300,
         text: "I often goat to birthday parties >_<",
         bubbleClass: "-top-40 -right-20",
@@ -51,7 +51,7 @@ const ANIMALS: Animal[] = [
         key: "elk",
         src: "/assets/animal4.png",
         alt: "Elk",
-        width: 120,
+        width: 96,
         height: 300,
         text: "Statistically speaking... I can't be only one",
         bubbleClass: "-top-40 -left-50",
@@ -101,7 +101,7 @@ export default function FunIntro() {
             {/* Animals + cake row */}
             <div
                 ref={containerRef}
-                className="relative flex justify-between items-end text-center gap-6"
+                className="relative flex justify-between items-end text-center gap-6 min-h-[125px]"
             >
                 {ANIMALS.slice(0, 1).map((a) => (
                     <AnimalWithSpeech
@@ -134,8 +134,13 @@ export default function FunIntro() {
                     }}
                     aria-hidden
                 >
-                    <Image src={"/assets/cake.png"} alt={"Cake"} width={250} height={200} onClick={() => fire()} />
-                    <div className={`absolute ${playFireworks ? 'inline' : 'hidden'} `}>
+                    <Image
+                        src={"/assets/cake.png"}
+                        alt={"Cake"}
+                        width={231}
+                        height={250}
+                        onClick={() => fire()} />
+                    <div className={`absolute -top-20 ${playFireworks ? 'inline' : 'hidden'} `}>
                         <ParticleBurst key={fireworksKey} />
                     </div>
                 </motion.div>

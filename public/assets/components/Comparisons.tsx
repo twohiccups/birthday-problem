@@ -7,7 +7,6 @@ function calculateComparisons(n: number) {
     return (n * (n - 1)) / 2;
 }
 
-
 function circleLayout(n: number, size: number, margin = 24) {
     const r = (Math.min(size, size) - margin * 2) / 2;
     const cx = size / 2;
@@ -92,7 +91,7 @@ export default function Comparisons() {
 
                     {/* Play / Pause */}
                     <button
-                        className="px-3 py-1.5 rounded-2xl shadow-sm border hover:shadow transition min-w-20 shrink-0"
+                        className="px-3 text-xs sm:text-base py-1.5 rounded-2xl shadow-sm border hover:shadow transition min-w-20 shrink-0"
                         onClick={() => setPlaying((p) => !p)}
                         aria-label={playing ? "Pause" : "Play"}
                     >
@@ -101,7 +100,7 @@ export default function Comparisons() {
 
                     {/* Reset */}
                     <button
-                        className="px-3 py-1.5 rounded-2xl shadow-sm border hover:shadow transition shrink-0"
+                        className="px-3 text-xs sm:text-base py-1.5 rounded-2xl shadow-sm border hover:shadow transition shrink-0"
                         onClick={() => {
                             setK(0);
                             setPlaying(false);
@@ -165,19 +164,24 @@ export default function Comparisons() {
 
                 {/* Chart Card */}
                 <div className="relative rounded-3xl border shadow-sm bg-white">
-                    <div
-                        className="font-lexend-deca absolute top-2 left-2 z-10 rounded-full border bg-white/90 backdrop-blur px-3 py-1 text-xs font-medium text-gray-800 shadow-sm"
-                        aria-live="polite"
-                    >
-                        Total comparisons: {total}
+                    {/* Moved total label ABOVE the graph so it doesn't overlap nodes */}
+                    <div className="px-4 pt-3">
+                        <div
+                            className="font-lexend-deca inline-flex items-center rounded-full border bg-white px-3 py-1 font-medium text-xs text-gray-800 shadow-sm"
+                            aria-live="polite"
+                        >
+                            Comparisons: {total}
+                        </div>
                     </div>
 
                     <svg
                         viewBox={`0 0 ${size} ${size}`}
                         width="100%"
                         height="100%"
+                        preserveAspectRatio="xMidYMid meet"
                         role="img"
                         aria-label={`Complete graph with ${n} nodes and ${total} comparisons`}
+                        className="block"
                     >
                         {/* Edges */}
                         <g>
@@ -222,6 +226,7 @@ export default function Comparisons() {
                             ))}
                         </g>
 
+                        {/* Node labels */}
                         <g>
                             {pts.map((p, i) => (
                                 <text

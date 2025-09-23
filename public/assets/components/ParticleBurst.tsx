@@ -13,7 +13,7 @@ type ParticleBurstProps = {
 
 export default function ParticleBurst({
     count = 14,
-    radius = 280,
+    radius = 150,
     duration = 1.2,
     repeat = 0,
     sizeRange = [8, 28],
