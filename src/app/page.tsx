@@ -29,7 +29,7 @@ export default function Home() {
         <Formula />
       </Section>
 
-      <Section className="max-w-8xl mx-auto">
+      <Section className="max-w-7xl mx-auto">
         <Calendar />
       </Section>
 

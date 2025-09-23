@@ -14,7 +14,6 @@ export default function Button({ className = '', children, ...props }: ButtonPro
         hover:shadow hover:bg-neutral-50 
         hover:text-black
         active:scale-95
-        transition transition-colors
         min-w-20 shrink-0 
         ${className}
       `}

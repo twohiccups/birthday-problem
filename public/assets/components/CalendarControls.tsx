@@ -14,7 +14,7 @@ export default function CalendarControls({
     onMultiRoll: (times: number) => void;
 }) {
     return (
-        <div className="flex flex-wrap items-end gap-2 sm:gap-4 rounded-xl border-3 border-neutral-200 p-2 sm:p-4 font-lexend-deca">
+        <div className="flex flex-wrap items-end gap-2 sm:gap-4 rounded-xl border-3 border-neutral-200 p-2 sm:p-4 font-lexend-deca w-full">
             <div className="flex-1 min-w-[120px]">
                 <label htmlFor="n" className="block text-xs sm:text-sm font-medium">
                     People

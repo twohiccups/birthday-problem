@@ -98,7 +98,7 @@ export default function Month({
             </div>
 
             {/* Weekday row */}
-            <div className="grid grid-cols-7 text-center  text-tiny sm:text-xs text-neutral-600 gap-y-1 pt-2 pb-2">
+            <div className="grid grid-cols-7 text-center  text-tiny sm:text-xs sm:font-sans text-neutral-600 gap-y-1 p-2 pb-0">
                 {WEEKDAYS_SHORT.map((d, i) => (
                     <div key={`${d}-${i}`}>
                         {d}
@@ -107,7 +107,7 @@ export default function Month({
             </div>
 
             {/* Dates grid */}
-            <div className="grid grid-cols-7  text-center text-tiny sm:text-base sm:gap-y-1 sm:pb-1 sm:p-2">
+            <div className="grid grid-cols-7  text-center text-tiny sm:text-base sm:font-sans sm:gap-y-1 sm:pb-1 sm:p-2">
                 {weeks.map((week, wi) =>
                     week.map((day, di) => {
                         const hidden = day == null;
